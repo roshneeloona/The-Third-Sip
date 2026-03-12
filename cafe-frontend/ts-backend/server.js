@@ -11,7 +11,6 @@ app.use(express.json())
 
 const JWT_SECRET = "thirdsip_secret_key"
 
-// ── File-based user store — survives server restarts ──
 const DB_FILE = path.join(__dirname, "users.json")
 
 function loadUsers() {
@@ -23,7 +22,6 @@ function saveUsers(users) {
   fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2))
 }
 
-// ── Register ──────────────────────────────────────────
 app.post("/api/register", async (req, res) => {
   const { name, email, password } = req.body
 
@@ -51,7 +49,6 @@ app.post("/api/register", async (req, res) => {
   })
 })
 
-// ── Login ─────────────────────────────────────────────
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body
 

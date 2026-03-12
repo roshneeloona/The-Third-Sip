@@ -9,16 +9,13 @@ function Home() {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    // ── Lenis: sole scroll engine, handles all smoothing ──
     const lenis = new Lenis({
-      lerp: 0.09,          // lower = smoother/lazier, higher = snappier
+      lerp: 0.09,        
       smoothWheel: true,
       wheelMultiplier: 0.95,
       touchMultiplier: 1.4,
     });
 
-    // Drive our scrollY state from Lenis's own smoothed position
-    // so the zoom effect is perfectly in sync with the smooth scroll
     lenis.on("scroll", ({ scroll }) => {
       setScrollY(scroll);
     });
@@ -36,12 +33,11 @@ function Home() {
     };
   }, []);
 
-  // Scroll-driven values — all clamped so they stop exactly at target
   const progress     = Math.min(scrollY / 650, 1);
   const heroOpacity  = Math.max(1 - scrollY / 380, 0);
-  const titleScale   = 1 + progress * 0.32;          // 1 → 1.32
-  const contentY     = scrollY * 0.12;                // gentle upward drift
-  const bgY          = scrollY * 0.18;                // parallax bg
+  const titleScale   = 1 + progress * 0.32;          
+  const contentY     = scrollY * 0.12;                
+  const bgY          = scrollY * 0.18;                
 
   const featured = coffees.slice(0, 3);
 

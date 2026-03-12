@@ -5,7 +5,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  // Each item in cart: { ...coffee, qty, customization: { shots, sugar, milk, size, extras[] } }
+  // Each item in cart: { coffee, qty, customization: { shots, sugar, milk, size, extras[] } }
   const addToCart = (coffee, customization) => {
     const key = `${coffee.id}-${JSON.stringify(customization)}`;
     setCart((prev) => {
