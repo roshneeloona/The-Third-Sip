@@ -72,7 +72,7 @@ export default function AdminLanding() {
           </motion.div>
         </div>
 
-        {/* scroll indicator */}
+        {/* scroll indicator
         <div className="hero__scroll-indicator">
           <motion.div
             className="hero__scroll-line"
@@ -80,8 +80,8 @@ export default function AdminLanding() {
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.3, delay: 1.1 }}
           />
-          <span className="hero__scroll-text">Scroll</span>
-        </div>
+          {/* <span className="hero__scroll-text">Scroll</span> */}
+        {/* </div> */} 
       </section>
 
       {/* ── Marquee ── */}
