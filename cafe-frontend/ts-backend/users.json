@@ -4,5 +4,11 @@
     "name": "roshnee loona",
     "email": "roshneeloona@gmail.com",
     "password": "$2a$10$O5D0YCJYfqCtKOjxT8FjUuMKWGgE5ZZOXWlf71y5MsPL7oo2r/YUC"
+  },
+  {
+    "id": 2,
+    "name": "Simran",
+    "email": "leh.ladhak.0007@gmail.com",
+    "password": "$2a$10$v5ZdIXFVlJmR6lpg8odJcex9xJAZJA/Y.w.vO6NtFsJENcy06vRia"
   }
 ]
