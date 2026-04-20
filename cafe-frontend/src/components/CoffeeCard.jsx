@@ -1,15 +1,9 @@
-import { useState } from "react"
-import { motion } from "framer-motion"
-import CoffeeCustomizerModal from "./CoffeeCustomizerModal"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import CoffeeCustomizerModal from "./CoffeeCustomizerModal";
 
-function CoffeeCard({ coffee, onAddToCart }) {
-  const [modalOpen, setModalOpen] = useState(false)
-
-  function handleClick() {
-    // If onAddToCart returns false, user is not logged in — don't open modal
-    if (onAddToCart && !onAddToCart()) return
-    setModalOpen(true)
-  }
+function CoffeeCard({ coffee }) {
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
@@ -29,7 +23,7 @@ function CoffeeCard({ coffee, onAddToCart }) {
           <p className="coffee-card__desc">{coffee.description}</p>
           <div className="coffee-card__footer">
             <span className="coffee-card__price">₹{coffee.price}</span>
-            <span className="coffee-card__cta-hint">Customise →</span>
+            <span className="coffee-card__cta-hint">Customize →</span>
           </div>
         </div>
       </motion.div>

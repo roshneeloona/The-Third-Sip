@@ -7,8 +7,14 @@
   },
   {
     "id": 2,
+<<<<<<< HEAD
     "name": "Simran",
     "email": "leh.ladhak.0007@gmail.com",
     "password": "$2a$10$v5ZdIXFVlJmR6lpg8odJcex9xJAZJA/Y.w.vO6NtFsJENcy06vRia"
+=======
+    "name": "Roshnee Loona",
+    "email": "loonaroshnee18@gmail.com",
+    "password": "$2a$10$CiuEkDQ3Q51CFAmxgWGo7eo3q4SE9j20B5gL45B7lggjCkvZC2Fnm"
+>>>>>>> 92fb11b (menu changed)
   }
 ]

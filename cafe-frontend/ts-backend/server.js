@@ -56,12 +56,12 @@ app.post("/api/login", async (req, res) => {
 
   const user = users.find(u => u.email === email)
   if (!user) {
-    return res.status(400).json({ message: "Invalid email or password" })
+    return res.status(400).json({ message: "Invalid email" })
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
   if (!isMatch) {
-    return res.status(400).json({ message: "Invalid email or password" })
+    return res.status(400).json({ message: "Invalid password" })
   }
 
   const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "7d" })

@@ -5,9 +5,10 @@ import { useCart } from "../context/CartContext"
 
 function CustomizationTags({ customization }) {
   if (!customization) return null
-  const { size, milk, sugar, shots, extras } = customization
+  const { size, temperature, milk, sugar, shots, extras } = customization
   const tags = [
     size !== "Regular" && size,
+    temperature,
     shots > 1 && `${shots} shots`,
     milk !== "Whole Milk" && milk,
     sugar !== "1 tsp" && sugar,

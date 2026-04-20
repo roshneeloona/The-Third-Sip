@@ -11,11 +11,9 @@ function App() {
   return (
     <CartProvider>
       <Routes>
-        {/* Login and Signup don't show the Navbar */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* All other pages show the Navbar */}
         <Route path="*" element={
           <>
             <Navbar />

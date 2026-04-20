@@ -211,7 +211,7 @@ function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.25 }}
         >
-          <Link to="/menu" className="btn btn--primary">View Full Menu →</Link>
+          <Link to="/menu"className="btn btn--primary">View Full Menu →</Link>
         </motion.div>
       </section>
 

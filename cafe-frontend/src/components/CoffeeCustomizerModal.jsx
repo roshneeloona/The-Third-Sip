@@ -8,8 +8,10 @@ const SIZES = [
   { label: "Large", short: "L", priceAdj: 30 },
 ];
 
+const TEMPERATURES = ["Hot", "Cold"];
+
 const MILKS = ["Whole Milk", "Oat Milk", "Almond Milk", "Soy Milk", "Coconut Milk", "Skimmed"];
-const SUGARS = ["No Sugar", "½ tsp", "1 tsp", "2 tsp", "Honey", "Stevia"];
+const SUGARS = ["No Sugar", "½ tsp", "1 tsp", "2 tsp", "Honey", "Brown Sugar"];
 const EXTRAS = [
   { label: "Extra Shot", price: 40 },
   { label: "Vanilla Syrup", price: 30 },
@@ -22,6 +24,7 @@ const EXTRAS = [
 export default function CoffeeCustomizerModal({ coffee, onClose }) {
   const { addToCart } = useCart();
   const [size, setSize] = useState("Regular");
+  const [temperature, setTemperature] = useState(coffee.category === "Hot Beverages" ? "Hot" : "Cold");
   const [milk, setMilk] = useState("Whole Milk");
   const [sugar, setSugar] = useState("1 tsp");
   const [shots, setShots] = useState(1);
@@ -42,7 +45,7 @@ export default function CoffeeCustomizerModal({ coffee, onClose }) {
   const finalPrice = coffee.price + sizeAdj + extrasTotal + shotAdj;
 
   const handleAddToCart = () => {
-    const customization = { size, milk, sugar, shots, extras };
+    const customization = { size, temperature, milk, sugar, shots, extras };
     addToCart({ ...coffee, price: finalPrice }, customization);
     setAdded(true);
     setTimeout(() => {
@@ -96,6 +99,22 @@ export default function CoffeeCustomizerModal({ coffee, onClose }) {
                         {s.priceAdj > 0 ? `+₹${s.priceAdj}` : `-₹${Math.abs(s.priceAdj)}`}
                       </span>
                     )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Temperature */}
+            <div className="modal__section">
+              <h3 className="modal__section-title">Temperature</h3>
+              <div className="modal__pills">
+                {TEMPERATURES.map((t) => (
+                  <button
+                    key={t}
+                    className={`pill ${temperature === t ? "pill--active" : ""}`}
+                    onClick={() => setTemperature(t)}
+                  >
+                    {t}
                   </button>
                 ))}
               </div>
