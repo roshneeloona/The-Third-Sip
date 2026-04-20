@@ -1,37 +1,41 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Link, useNavigate } from "react-router-dom"
+import { useCart } from "../context/CartContext"
 
 function CustomizationTags({ customization }) {
-  if (!customization) return null;
-  const { size, milk, sugar, shots, extras } = customization;
+  if (!customization) return null
+  const { size, milk, sugar, shots, extras } = customization
   const tags = [
     size !== "Regular" && size,
     shots > 1 && `${shots} shots`,
     milk !== "Whole Milk" && milk,
     sugar !== "1 tsp" && sugar,
     ...(extras || []),
-  ].filter(Boolean);
-
-  if (!tags.length) return null;
+  ].filter(Boolean)
+  if (!tags.length) return null
   return (
     <div className="cart-item__tags">
-      {tags.map((t) => (
-        <span key={t} className="cart-tag">{t}</span>
-      ))}
+      {tags.map(t => <span key={t} className="cart-tag">{t}</span>)}
     </div>
-  );
+  )
 }
 
 function Cart() {
-  const { cart, removeFromCart, updateQty, total, clearCart } = useCart();
-  const [ordered, setOrdered] = useState(false);
+  const { cart, removeFromCart, updateQty, total, clearCart } = useCart()
+  const [ordered, setOrdered] = useState(false)
+  const navigate = useNavigate()
 
-  const handleOrder = () => {
-    setOrdered(true);
-    clearCart();
-  };
+  const user = JSON.parse(localStorage.getItem("user") || "null")
+
+  function handleOrder() {
+    if (!user) {
+      navigate("/login")
+      return
+    }
+    setOrdered(true)
+    clearCart()
+  }
 
   if (ordered) {
     return (
@@ -40,17 +44,17 @@ function Cart() {
           className="cart-success"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6 }}
         >
           <div className="cart-success__icon">✓</div>
           <h2>Order Placed!</h2>
-          <p>Your coffee is being crafted with love. See you soon.</p>
+          <p>Your drink is being crafted with love. See you soon.</p>
           <Link to="/menu" className="btn btn--primary" onClick={() => setOrdered(false)}>
             Order Again
           </Link>
         </motion.div>
       </div>
-    );
+    )
   }
 
   return (
@@ -65,7 +69,6 @@ function Cart() {
           className="cart-empty"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
           <p className="cart-empty__msg">Your cup is empty.</p>
           <Link to="/menu" className="btn btn--primary">Browse Menu</Link>
@@ -74,7 +77,7 @@ function Cart() {
         <div className="cart-layout">
           <ul className="cart-items">
             <AnimatePresence>
-              {cart.map((item) => (
+              {cart.map(item => (
                 <motion.li
                   key={item.key}
                   className="cart-item"
@@ -104,8 +107,7 @@ function Cart() {
           <div className="cart-summary">
             <h2 className="cart-summary__title">Order Summary</h2>
             <div className="cart-summary__row">
-              <span>Subtotal</span>
-              <span>₹{total}</span>
+              <span>Subtotal</span><span>₹{total}</span>
             </div>
             <div className="cart-summary__row">
               <span>Delivery</span>
@@ -113,18 +115,29 @@ function Cart() {
             </div>
             <div className="cart-summary__divider" />
             <div className="cart-summary__row cart-summary__row--total">
-              <span>Total</span>
-              <span>₹{total}</span>
+              <span>Total</span><span>₹{total}</span>
             </div>
-            <button className="btn btn--primary cart-summary__cta" onClick={handleOrder}>
-              Place Order
+
+            {/* Show login prompt if not logged in */}
+            {!user && (
+              <p className="cart-login-note">
+                You need to <Link to="/login">sign in</Link> to place an order.
+              </p>
+            )}
+
+            <button
+              className="btn btn--primary cart-summary__cta"
+              onClick={handleOrder}
+            >
+              {user ? "Place Order" : "Sign In to Order"}
             </button>
+
             <Link to="/menu" className="cart-summary__back">← Continue Shopping</Link>
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Cart;
+export default Cart

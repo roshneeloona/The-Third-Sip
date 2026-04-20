@@ -2096,3 +2096,19 @@ a { text-decoration: none; color: inherit; }
   .auth-left { display: none; }
   .auth-right { padding: 80px 24px 48px; }
 }
+
+/* ── Cart login note ── */
+.cart-login-note {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  background: rgba(198,156,109,0.1);
+  border: 1px solid rgba(198,156,109,0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  margin-top: 18px;
+}
+.cart-login-note a {
+  color: var(--caramel);
+  font-weight: 600;
+}

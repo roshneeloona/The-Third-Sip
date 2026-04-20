@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import CoffeeCustomizerModal from "./CoffeeCustomizerModal";
+import { useState } from "react"
+import { motion } from "framer-motion"
+import CoffeeCustomizerModal from "./CoffeeCustomizerModal"
 
-function CoffeeCard({ coffee }) {
-  const [modalOpen, setModalOpen] = useState(false);
+function CoffeeCard({ coffee, onAddToCart }) {
+  const [modalOpen, setModalOpen] = useState(false)
+
+  function handleClick() {
+    // If onAddToCart returns false, user is not logged in — don't open modal
+    if (onAddToCart && !onAddToCart()) return
+    setModalOpen(true)
+  }
 
   return (
     <>
@@ -11,7 +17,7 @@ function CoffeeCard({ coffee }) {
         className="coffee-card"
         whileHover={{ y: -8 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        onClick={() => setModalOpen(true)}
+        onClick={handleClick}
         style={{ cursor: "pointer" }}
       >
         <div className="coffee-card__img-wrap">
@@ -23,7 +29,7 @@ function CoffeeCard({ coffee }) {
           <p className="coffee-card__desc">{coffee.description}</p>
           <div className="coffee-card__footer">
             <span className="coffee-card__price">₹{coffee.price}</span>
-            <span className="coffee-card__cta-hint">Customize →</span>
+            <span className="coffee-card__cta-hint">Customise →</span>
           </div>
         </div>
       </motion.div>
@@ -32,7 +38,7 @@ function CoffeeCard({ coffee }) {
         <CoffeeCustomizerModal coffee={coffee} onClose={() => setModalOpen(false)} />
       )}
     </>
-  );
+  )
 }
 
-export default CoffeeCard;
+export default CoffeeCard
