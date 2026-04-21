@@ -616,7 +616,9 @@ a { text-decoration: none; color: inherit; }
   flex-shrink: 0;
 }
 
-.modal__close:hover { background: var(--espresso); color: var(--white); }
+.modal__close:hover {
+   background: var(--espresso); color: var(--white); 
+  }
 
 .modal__body {
   padding: 22px 24px;
@@ -625,8 +627,6 @@ a { text-decoration: none; color: inherit; }
   gap: 26px;
   flex: 1;
 }
-
-.modal__section {}
 
 .modal__section-title {
   font-size: 0.72rem;
