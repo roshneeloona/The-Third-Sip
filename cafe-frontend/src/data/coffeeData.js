@@ -185,7 +185,7 @@ export const menuItems = [
     price: 250,
     category: "Cold Beverages",
     description: "Blueberries and mint crushed together with lime and soda. Deep and fresh.",
-    image: "https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=600&auto=format&fit=crop&q=80",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHFg_-Xtt3577DDqUZr2Yz4KI4cECEIcDE3w&s",
   },
   {
     id: 25,
