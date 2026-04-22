@@ -185,7 +185,7 @@ export const menuItems = [
     price: 250,
     category: "Cold Beverages",
     description: "Blueberries and mint crushed together with lime and soda. Deep and fresh.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHFg_-Xtt3577DDqUZr2Yz4KI4cECEIcDE3w&s",
+    image: "https://alwayseatdessert.com/wp-content/uploads/2024/04/Blueberry-Mojito-Mocktail-1-square.jpg",
   },
   {
     id: 25,
@@ -193,7 +193,7 @@ export const menuItems = [
     price: 240,
     category: "Cold Beverages",
     description: "Juicy watermelon blended with mint and lime soda. Summer in a glass.",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTog3XqKxrnhZJLw_VeekfY0SW3KJ21Bgbu_g&s",
+    image: "https://www.orchidsandsweettea.com/wp-content/uploads/2022/07/Watermelon-Jalepeno-Mocktail-5-of-5.jpg",
   },
   {
     id: 26,
