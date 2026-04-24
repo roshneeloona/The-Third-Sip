@@ -64,11 +64,11 @@ export default function AdminLogin() {
           <h1 className="auth-title">Staff portal.</h1>
           <p className="auth-sub">Sign in to manage orders, stock, and menu operations securely.</p>
 
-          <div className="auth-note">
+          {/* <div className="auth-note">
             <p>This workspace is reserved for cafe staff only.</p>
             <p className="auth-note__hint">Demo login: admin@thirdsip.com / Admin@123</p>
             <p className="auth-note__hint">If another staff session is active, this login will stay blocked until that session closes or logs out.</p>
-          </div>
+          </div> */}
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-field">
