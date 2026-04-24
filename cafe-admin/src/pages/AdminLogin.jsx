@@ -15,7 +15,6 @@ export default function AdminLogin() {
     event.preventDefault();
     setError("");
     setLoading(true);
-
     try {
       const data = await apiRequest("/api/auth/admin-login", {
         method: "POST",
