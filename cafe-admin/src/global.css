@@ -1073,3 +1073,42 @@ a { text-decoration: none; color: inherit; }
   .modal__img { width: 90px; height: 75px; }
   .hero__title { font-size: clamp(3rem, 13vw, 6rem); white-space: normal; }
 }
+
+.navbar__role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(198,156,109,0.18);
+  border: 1px solid rgba(198,156,109,0.35);
+  color: var(--caramel);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.navbar__role-badge--admin {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.auth-note {
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(198,156,109,0.12);
+  border: 1px solid rgba(198,156,109,0.28);
+  display: grid;
+  gap: 8px;
+  color: var(--mahogany);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.auth-note__hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}

@@ -1,32 +1,41 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { INVENTORY, ORDERS } from "../data/adminData";
-import { expiryStatus } from "../utils/helpers";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAdminSummary } from "../hooks/useAdminSummary";
+import { apiRequest, clearAdminAuth } from "../utils/api";
 
 const TABS = [
-  { label: "Dashboard", icon: "◈", path: "/admin/dashboard" },
-  { label: "Orders",    icon: "◉", path: "/admin/orders"    },
-  { label: "Inventory", icon: "▣", path: "/admin/inventory" },
-  { label: "Menu",      icon: "◧", path: "/admin/menu"      },
+  { label: "Dashboard", icon: "â—ˆ", path: "/admin/dashboard" },
+  { label: "Orders", icon: "â—‰", path: "/admin/orders" },
+  { label: "Inventory", icon: "â–£", path: "/admin/inventory" },
+  { label: "Menu", icon: "â—§", path: "/admin/menu" },
 ];
 
 export default function Sidebar() {
   const [open, setOpen] = useState(true);
-  const navigate        = useNavigate();
-  const location        = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { summary } = useAdminSummary();
 
-  const expiryAlerts  = INVENTORY.filter(i => ["critical", "expired"].includes(expiryStatus(i.expiry)));
-  const pendingOrders = ORDERS.filter(o => o.status === "Pending");
   const badges = {
-    "/admin/orders":    pendingOrders.length,
-    "/admin/inventory": expiryAlerts.length,
+    "/admin/orders": summary?.stats?.pendingOrders || 0,
+    "/admin/inventory": summary?.stats?.expiryAlerts || 0,
   };
+
+  async function handleLogout() {
+    try {
+      await apiRequest("/api/auth/logout", { method: "POST" });
+    } catch (error) {
+      // Local cleanup still signs the admin out safely.
+    }
+
+    clearAdminAuth();
+    navigate("/login");
+  }
 
   return (
     <aside className={`sidebar ${open ? "sidebar--open" : "sidebar--closed"}`}>
-
       <div className="sidebar__brand">
-        <div className="sidebar__logo">☕</div>
+        <div className="sidebar__logo">â˜•</div>
         {open && (
           <div>
             <div className="sidebar__brand-name">The Third Sip</div>
@@ -36,19 +45,19 @@ export default function Sidebar() {
       </div>
 
       <nav className="sidebar__nav">
-        {TABS.map(t => {
-          const active = location.pathname === t.path;
-          const badge  = badges[t.path] || 0;
+        {TABS.map((tab) => {
+          const active = location.pathname === tab.path;
+          const badge = badges[tab.path] || 0;
           return (
             <button
-              key={t.label}
-              onClick={() => navigate(t.path)}
+              key={tab.label}
+              onClick={() => navigate(tab.path)}
               className={`sidebar__link ${active ? "sidebar__link--active" : ""}`}
             >
-              <span className="sidebar__icon">{t.icon}</span>
+              <span className="sidebar__icon">{tab.icon}</span>
               {open && (
                 <>
-                  <span className="sidebar__label">{t.label}</span>
+                  <span className="sidebar__label">{tab.label}</span>
                   {badge > 0 && <span className="sidebar__badge">{badge}</span>}
                 </>
               )}
@@ -58,11 +67,15 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar__footer">
-        <button className="sidebar__toggle" onClick={() => setOpen(p => !p)}>
-          {open ? "◀" : "▶"}
+        {open && (
+          <button className="sidebar__toggle" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
+        <button className="sidebar__toggle" onClick={() => setOpen((value) => !value)}>
+          {open ? "â—€" : "â–¶"}
         </button>
       </div>
-
     </aside>
   );
 }

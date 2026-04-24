@@ -1,10 +1,60 @@
-import { useState } from "react";
-import { MENU_ITEMS } from "../data/adminData";
+import { useEffect, useState } from "react";
+import { apiRequest } from "../utils/api";
 import { fmt } from "../utils/helpers";
 
 export default function Menu() {
-  const [items, setItems] = useState(MENU_ITEMS);
-  const toggle = (id) => setItems(prev => prev.map(i => i.id === id ? { ...i, active: !i.active } : i));
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [updatingId, setUpdatingId] = useState("");
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadMenu() {
+      try {
+        const data = await apiRequest("/api/menu?includeInactive=true");
+        if (!ignore) {
+          setItems(data.items || []);
+        }
+      } catch (requestError) {
+        if (!ignore) {
+          setError(requestError.message || "Could not load menu");
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadMenu();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  async function toggle(id, active) {
+    setUpdatingId(String(id));
+    try {
+      const data = await apiRequest(`/api/menu/${id}`, {
+        method: "PATCH",
+        body: { active: !active },
+      });
+
+      setItems((prev) =>
+        prev.map((item) => (item.id === id ? data.item : item))
+      );
+    } catch (requestError) {
+      setError(requestError.message || "Could not update menu");
+    } finally {
+      setUpdatingId("");
+    }
+  }
+
+  if (loading) {
+    return <div className="card">Loading menu items...</div>;
+  }
 
   return (
     <div className="card">
@@ -15,13 +65,15 @@ export default function Menu() {
         </div>
       </div>
 
+      {error && <p className="card__eyebrow" style={{ color: "#8a3a3a" }}>{error}</p>}
+
       <div className="menu-grid">
-        {items.map(item => (
+        {items.map((item) => (
           <div key={item.id} className={`menu-card ${item.active ? "menu-card--active" : "menu-card--inactive"}`}>
             <div className="menu-card__header">
               <div>
                 <div className="menu-card__name">{item.name}</div>
-                <div className="menu-card__meta">{item.category} · {item.sold} sold</div>
+                <div className="menu-card__meta">{item.category} Â· {item.sold} sold</div>
               </div>
               <div className="menu-card__price">{fmt(item.price)}</div>
             </div>
@@ -32,10 +84,11 @@ export default function Menu() {
               <span className="menu-card__bar-count">{item.sold}/130</span>
             </div>
             <button
-              onClick={() => toggle(item.id)}
+              onClick={() => toggle(item.id, item.active)}
               className={`toggle-btn ${item.active ? "toggle-btn--active" : "toggle-btn--inactive"}`}
+              disabled={updatingId === String(item.id)}
             >
-              {item.active ? "● Active" : "○ Hidden"}
+              {updatingId === String(item.id) ? "Saving..." : item.active ? "â— Active" : "â—‹ Hidden"}
             </button>
           </div>
         ))}

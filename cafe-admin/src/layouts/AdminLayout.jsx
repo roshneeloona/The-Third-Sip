@@ -1,25 +1,26 @@
 import { useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import { INVENTORY } from "../data/adminData";
-import { expiryStatus } from "../utils/helpers";
+import { getAdminUser } from "../utils/api";
+import { useAdminSummary } from "../hooks/useAdminSummary";
 
 const PAGE_TITLES = {
   "/admin/dashboard": "Dashboard",
-  "/admin/orders":    "Orders",
+  "/admin/orders": "Orders",
   "/admin/inventory": "Inventory",
-  "/admin/menu":      "Menu",
+  "/admin/menu": "Menu",
 };
 
 export default function AdminLayout({ children }) {
-  const location     = useLocation();
-  const title        = PAGE_TITLES[location.pathname] || "Admin";
-  const expiryAlerts = INVENTORY.filter(i => ["critical", "expired"].includes(expiryStatus(i.expiry)));
+  const location = useLocation();
+  const title = PAGE_TITLES[location.pathname] || "Admin";
+  const adminUser = getAdminUser();
+  const { summary } = useAdminSummary();
+  const expiryAlerts = summary?.stats?.expiryAlerts || 0;
 
   return (
     <div className="admin-app">
       <Sidebar />
       <main className="admin-main">
-
         <div className="page-header">
           <div>
             <p className="page-eyebrow">Admin Panel</p>
@@ -29,12 +30,12 @@ export default function AdminLayout({ children }) {
             </p>
           </div>
           <div className="page-header__right">
-            {expiryAlerts.length > 0 && (
+            {expiryAlerts > 0 && (
               <div className="alert-pill">
-                🔔 {expiryAlerts.length} expiry alert{expiryAlerts.length > 1 ? "s" : ""}
+                ðŸ”” {expiryAlerts} expiry alert{expiryAlerts !== 1 ? "s" : ""}
               </div>
             )}
-            <div className="avatar">👤</div>
+            <div className="avatar">{adminUser?.name?.[0] || "A"}</div>
           </div>
         </div>
 

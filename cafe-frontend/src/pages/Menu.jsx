@@ -1,25 +1,51 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 import CoffeeCard from "../components/CoffeeCard"
 import { menuItems, categories } from "../data/coffeeData"
+import { fetchMenuItems, getStoredUser } from "../utils/api"
 
 function Menu() {
+  const [items, setItems] = useState(menuItems)
   const [activeCategory, setActiveCategory] = useState("All")
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
-  const filtered = activeCategory === "All"
-    ? menuItems
-    : menuItems.filter(item => item.category === activeCategory)
+  useEffect(() => {
+    let ignore = false
 
-  // This gets passed down to CoffeeCard so the modal knows to redirect if not logged in
+    async function loadMenu() {
+      try {
+        const apiItems = await fetchMenuItems()
+        if (!ignore && apiItems.length > 0) {
+          setItems(apiItems)
+        }
+      } catch (error) {
+        // The local dataset remains available if the API is offline.
+      } finally {
+        if (!ignore) {
+          setLoading(false)
+        }
+      }
+    }
+
+    loadMenu()
+    return () => {
+      ignore = true
+    }
+  }, [])
+
+  const filtered = activeCategory === "All"
+    ? items
+    : items.filter(item => item.category === activeCategory)
+
   function onAddToCart() {
-    const user = localStorage.getItem("user")
+    const user = getStoredUser()
     if (!user) {
       navigate("/login")
-      return false // not logged in
+      return false
     }
-    return true // logged in, proceed
+    return true
   }
 
   return (
@@ -35,7 +61,6 @@ function Menu() {
         </motion.div>
       </div>
 
-      {/* Category filters */}
       <div className="menu-page__filters">
         {categories.map(cat => (
           <button
@@ -43,15 +68,14 @@ function Menu() {
             className={`filter-btn ${activeCategory === cat ? "filter-btn--active" : ""}`}
             onClick={() => setActiveCategory(cat)}
           >
-            {cat === "Hot Beverages" && "☕ "}
-            {cat === "Cold Beverages" && "🥶 "}
-            {cat === "Food" && "🍽️ "}
+            {cat === "Hot Beverages" && "â˜• "}
+            {cat === "Cold Beverages" && "ðŸ¥¶ "}
+            {cat === "Food" && "ðŸ½ï¸ "}
             {cat}
           </button>
         ))}
       </div>
 
-      {/* Grid */}
       <div className="menu-page__grid">
         <AnimatePresence mode="popLayout">
           {filtered.map((item, i) => (
@@ -68,6 +92,12 @@ function Menu() {
           ))}
         </AnimatePresence>
       </div>
+
+      {!loading && filtered.length === 0 && (
+        <p className="menu-page__sub" style={{ textAlign: "center" }}>
+          No items are available in this category right now.
+        </p>
+      )}
     </div>
   )
 }

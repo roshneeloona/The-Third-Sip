@@ -1,13 +1,22 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
+import { apiRequest, getStoredUser, saveAuth } from "../utils/api"
 
 function Login() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const nextPath = location.state?.from || "/"
+
+  useEffect(() => {
+    if (getStoredUser()) {
+      navigate(nextPath, { replace: true })
+    }
+  }, [navigate, nextPath])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -20,23 +29,14 @@ function Login() {
 
     setLoading(true)
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const data = await apiRequest("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: { email, password }
       })
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.message || "Login failed")
-        return
-      }
-
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.user))
-      navigate("/")
+      saveAuth(data.token, data.user)
+      navigate(nextPath, { replace: true })
     } catch (err) {
-      setError("Could not connect to server")
+      setError(err.message || "Could not connect to server")
     } finally {
       setLoading(false)
     }
@@ -44,7 +44,6 @@ function Login() {
 
   return (
     <div className="auth-page">
-
       <div className="auth-left">
         <div className="auth-left__overlay" />
         <div className="auth-left__text">
@@ -52,14 +51,14 @@ function Login() {
           <blockquote className="auth-quote">
             "The first sip wakes you.<br />
             The second soothes you.<br />
-            The third — that's where<br />
+            The third - that's where<br />
             the magic lives."
           </blockquote>
         </div>
       </div>
 
       <div className="auth-right">
-        <Link to="/" className="auth-back">← Back</Link>
+        <Link to="/" className="auth-back">Back</Link>
 
         <motion.div
           className="auth-box"
@@ -68,10 +67,13 @@ function Login() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="auth-title">Welcome back.</h1>
-          <p className="auth-sub">Sign in to your account</p>
+          <p className="auth-sub">Sign in to your customer account</p>
+
+          <div className="auth-note">
+            <p>Use your account to place orders and view your order flow smoothly.</p>
+          </div>
 
           <form className="auth-form" onSubmit={handleSubmit}>
-
             <div className="auth-field">
               <label>Email</label>
               <input
@@ -86,7 +88,7 @@ function Login() {
               <label>Password</label>
               <input
                 type="password"
-                placeholder="••••••••"
+                placeholder="********"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -104,7 +106,6 @@ function Login() {
           </p>
         </motion.div>
       </div>
-
     </div>
   )
 }

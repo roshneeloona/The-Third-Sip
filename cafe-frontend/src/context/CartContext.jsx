@@ -1,9 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("thirdsip_cart") || "[]");
+    } catch (error) {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("thirdsip_cart", JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (coffee, customization) => {
     const key = `${coffee.id}-${JSON.stringify(customization)}`;

@@ -1,0 +1,15 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-010
+Customer: simran
+Email: rajputsimran.0079@gmail.com
+Status: Pending
+Placed At: 24/4/2026, 1:00:13 am
+
+Items:
+- Flat White x1 @ INR 190 = INR 190
+
+Total: INR 190
+
+Thanks for visiting The Third Sip.

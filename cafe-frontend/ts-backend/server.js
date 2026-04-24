@@ -1,75 +1,131 @@
-const express = require("express")
-const cors = require("cors")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-const fs = require("fs")
-const path = require("path")
+const http = require("http");
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const {
+  PORT,
+  SESSION_SECRET,
+  STATIC_DIR,
+  RECEIPTS_DIR,
+  INVENTORY_FILE,
+  ORDERS_FILE,
+  MENU_META_FILE,
+  ADMIN_SESSION_FILE,
+} = require("./config/constants");
+const { requestLogger } = require("./middleware/requestLogger");
+const { attachSessionMeta } = require("./middleware/auth");
+const { errorHandler, notFoundHandler } = require("./middleware/errorHandlers");
+const { ensureDirectory, ensureJsonFile } = require("./services/jsonStore");
+const { DEFAULT_INVENTORY, DEFAULT_MENU_META, DEFAULT_ORDERS } = require("./services/seedData");
+const authRoutes = require("./routes/authRoutes");
+const menuRoutes = require("./routes/menuRoutes");
+const orderRoutes = require("./routes/orderRoutes");
+const inventoryRoutes = require("./routes/inventoryRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const { initializeSocketServer } = require("./services/socketService");
+const { connectToDatabase } = require("./services/database");
+const { migrateLegacyUsers } = require("./services/userMigrationService");
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+const app = express();
+const server = http.createServer(app);
 
-const JWT_SECRET = "thirdsip_secret_key"
+initializeSocketServer(server);
 
-const DB_FILE = path.join(__dirname, "users.json")
+function allowLocalhostOrigins(origin, callback) {
+  if (!origin) {
+    callback(null, true);
+    return;
+  }
 
-function loadUsers() {
-  if (!fs.existsSync(DB_FILE)) return []
-  return JSON.parse(fs.readFileSync(DB_FILE, "utf-8"))
+  const isAllowed =
+    /^http:\/\/localhost:\d+$/.test(origin) ||
+    /^http:\/\/127\.0\.0\.1:\d+$/.test(origin);
+
+  callback(isAllowed ? null : new Error("Origin not allowed"), isAllowed);
 }
 
-function saveUsers(users) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(users, null, 2))
+async function bootstrapStorage() {
+  await ensureDirectory(STATIC_DIR);
+  await ensureDirectory(RECEIPTS_DIR);
+  await ensureJsonFile(INVENTORY_FILE, DEFAULT_INVENTORY);
+  await ensureJsonFile(ORDERS_FILE, DEFAULT_ORDERS);
+  await ensureJsonFile(MENU_META_FILE, DEFAULT_MENU_META);
+  await ensureJsonFile(ADMIN_SESSION_FILE, {
+    active: false,
+    sessionId: null,
+    userId: null,
+    name: "",
+    email: "",
+    userAgent: "",
+    lastSeenAt: null,
+    expiresAt: null,
+  });
 }
 
-app.post("/api/register", async (req, res) => {
-  const { name, email, password } = req.body
+function configureApp() {
+  app.use(
+    cors({
+      origin: allowLocalhostOrigins,
+      credentials: true,
+    })
+  );
+  app.use(requestLogger);
+  app.use(express.json({ limit: "1mb" }));
+  app.use(express.urlencoded({ extended: true }));
+  app.use(
+    session({
+      secret: SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      },
+    })
+  );
+  app.use(attachSessionMeta);
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ message: "All fields are required" })
+  app.use("/static", express.static(STATIC_DIR));
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(STATIC_DIR, "status.html"));
+  });
+
+  app.use("/api/auth", authRoutes);
+  app.use("/api/menu", menuRoutes);
+  app.use("/api/orders", orderRoutes);
+  app.use("/api/inventory", inventoryRoutes);
+  app.use("/api/dashboard", dashboardRoutes);
+
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+}
+
+async function start() {
+  await bootstrapStorage();
+  await connectToDatabase();
+  const userMigration = await migrateLegacyUsers();
+  configureApp();
+
+  if (userMigration.migrated) {
+    console.log(`Migrated ${userMigration.migratedCount} users from users.json into MongoDB.`);
+  } else if (userMigration.seededDefaultAdmin) {
+    console.log("Seeded the default admin user into MongoDB.");
   }
 
-  const users = loadUsers()
+  await new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(PORT, () => {
+      server.off("error", reject);
+      resolve();
+    });
+  });
 
-  const existingUser = users.find(u => u.email === email)
-  if (existingUser) {
-    return res.status(400).json({ message: "Email already registered" })
-  }
+  console.log(`Server running on http://localhost:${PORT}`);
+}
 
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const user = { id: users.length + 1, name, email, password: hashedPassword }
-  users.push(user)
-  saveUsers(users)
-
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "7d" })
-
-  res.status(201).json({
-    token,
-    user: { id: user.id, name: user.name, email: user.email }
-  })
-})
-
-app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body
-
-  const users = loadUsers()
-
-  const user = users.find(u => u.email === email)
-  if (!user) {
-    return res.status(400).json({ message: "Invalid email" })
-  }
-
-  const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) {
-    return res.status(400).json({ message: "Invalid password" })
-  }
-
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "7d" })
-
-  res.json({
-    token,
-    user: { id: user.id, name: user.name, email: user.email }
-  })
-})
-
-app.listen(5000, () => console.log("Server running on http://localhost:5000"))
+start().catch((error) => {
+  console.error("Failed to start server", error);
+  process.exit(1);
+});

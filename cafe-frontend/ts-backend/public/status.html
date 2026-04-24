@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Third Sip Backend</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Georgia, serif;
+        background: linear-gradient(135deg, #f6efe7, #ead7c3);
+        color: #2e1c13;
+      }
+
+      .panel {
+        width: min(680px, calc(100vw - 48px));
+        padding: 32px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 24px 60px rgba(84, 44, 20, 0.14);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+      }
+
+      p {
+        line-height: 1.6;
+      }
+
+      code {
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #f2e5d7;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="panel">
+      <h1>The Third Sip backend is running.</h1>
+      <p>
+        This Express server now exposes auth, menu, orders, inventory, dashboard,
+        session, cookie, static-file, and receipt-stream endpoints.
+      </p>
+      <p>Customer and admin apps should call <code>/api/*</code> routes from here.</p>
+    </section>
+  </body>
+</html>

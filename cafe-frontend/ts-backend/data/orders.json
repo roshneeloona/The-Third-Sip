@@ -1,0 +1,346 @@
+[
+  {
+    "id": "ORD-001",
+    "orderNumber": 1,
+    "userId": 1,
+    "customer": "roshnee loona",
+    "customerEmail": "roshneeloona@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 180,
+        "category": "Hot Beverages"
+      },
+      {
+        "menuItemId": 33,
+        "name": "Chocolate Croissant",
+        "qty": 1,
+        "price": 180,
+        "category": "Food"
+      }
+    ],
+    "total": 360,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-23T09:12:00.000Z",
+    "updatedAt": "2026-04-23T09:45:00.000Z"
+  },
+  {
+    "id": "ORD-002",
+    "orderNumber": 2,
+    "userId": 2,
+    "customer": "Simran",
+    "customerEmail": "leh.ladhak.0007@gmail.com",
+    "items": [
+      {
+        "menuItemId": 8,
+        "name": "Cold Brew",
+        "qty": 1,
+        "price": 220,
+        "category": "Cold Beverages"
+      },
+      {
+        "menuItemId": 34,
+        "name": "Blueberry Muffin",
+        "qty": 1,
+        "price": 150,
+        "category": "Food"
+      }
+    ],
+    "total": 370,
+    "status": "Preparing",
+    "notes": "Less ice",
+    "createdAt": "2026-04-23T10:05:00.000Z",
+    "updatedAt": "2026-04-23T10:08:00.000Z"
+  },
+  {
+    "id": "ORD-003",
+    "orderNumber": 3,
+    "userId": 3,
+    "customer": "Roshnee Loona",
+    "customerEmail": "loonaroshnee18@gmail.com",
+    "items": [
+      {
+        "menuItemId": 3,
+        "name": "Latte",
+        "qty": 2,
+        "price": 200,
+        "category": "Hot Beverages"
+      }
+    ],
+    "total": 400,
+    "status": "Pending",
+    "notes": "",
+    "createdAt": "2026-04-23T11:02:00.000Z",
+    "updatedAt": "2026-04-23T15:11:31.957Z"
+  },
+  {
+    "id": "ORD-004",
+    "orderNumber": 4,
+    "userId": 1,
+    "customer": "roshnee loona",
+    "customerEmail": "roshneeloona@gmail.com",
+    "items": [
+      {
+        "menuItemId": 15,
+        "name": "Hazelnut Latte",
+        "qty": 1,
+        "price": 220,
+        "category": "Hot Beverages"
+      },
+      {
+        "menuItemId": 35,
+        "name": "Avocado Toast",
+        "qty": 1,
+        "price": 220,
+        "category": "Food"
+      }
+    ],
+    "total": 440,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-22T15:22:00.000Z",
+    "updatedAt": "2026-04-22T15:50:00.000Z"
+  },
+  {
+    "id": "ORD-005",
+    "orderNumber": 5,
+    "userId": 2,
+    "customer": "Simran",
+    "customerEmail": "leh.ladhak.0007@gmail.com",
+    "items": [
+      {
+        "menuItemId": 4,
+        "name": "Mocha",
+        "qty": 1,
+        "price": 210,
+        "category": "Hot Beverages"
+      },
+      {
+        "menuItemId": 33,
+        "name": "Chocolate Croissant",
+        "qty": 1,
+        "price": 180,
+        "category": "Food"
+      }
+    ],
+    "total": 390,
+    "status": "Cancelled",
+    "notes": "",
+    "createdAt": "2026-04-21T13:15:00.000Z",
+    "updatedAt": "2026-04-21T13:40:00.000Z"
+  },
+  {
+    "id": "ORD-006",
+    "orderNumber": 6,
+    "userId": 5,
+    "customer": "simran",
+    "customerEmail": "rajputsimran.0079@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 300,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 4,
+          "extras": []
+        }
+      }
+    ],
+    "total": 300,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-23T15:21:33.075Z",
+    "updatedAt": "2026-04-23T15:21:57.819Z"
+  },
+  {
+    "id": "ORD-007",
+    "orderNumber": 7,
+    "userId": 5,
+    "customer": "simran",
+    "customerEmail": "rajputsimran.0079@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 180,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 180,
+    "status": "Pending",
+    "notes": "",
+    "createdAt": "2026-04-23T15:24:21.304Z",
+    "updatedAt": "2026-04-23T15:24:21.304Z"
+  },
+  {
+    "id": "ORD-008",
+    "orderNumber": 8,
+    "userId": 5,
+    "customer": "simran",
+    "customerEmail": "rajputsimran.0079@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 220,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 2,
+          "extras": []
+        }
+      }
+    ],
+    "total": 220,
+    "status": "Pending",
+    "notes": "",
+    "createdAt": "2026-04-23T15:26:56.906Z",
+    "updatedAt": "2026-04-23T15:26:56.906Z"
+  },
+  {
+    "id": "ORD-009",
+    "orderNumber": 9,
+    "userId": 5,
+    "customer": "simran",
+    "customerEmail": "rajputsimran.0079@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 180,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 180,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-23T15:40:12.067Z",
+    "updatedAt": "2026-04-23T19:28:57.709Z"
+  },
+  {
+    "id": "ORD-010",
+    "orderNumber": 10,
+    "userId": 5,
+    "customer": "simran",
+    "customerEmail": "rajputsimran.0079@gmail.com",
+    "items": [
+      {
+        "menuItemId": 5,
+        "name": "Flat White",
+        "qty": 1,
+        "price": 190,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 190,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-23T19:30:13.936Z",
+    "updatedAt": "2026-04-23T19:31:45.873Z"
+  },
+  {
+    "id": "ORD-011",
+    "orderNumber": 11,
+    "userId": 6,
+    "customer": "simran rajput",
+    "customerEmail": "unknowuser.0056@gmail.com",
+    "items": [
+      {
+        "menuItemId": 23,
+        "name": "Strawberry Mojito",
+        "qty": 1,
+        "price": 240,
+        "category": "Cold Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Cold",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 240,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-23T19:59:05.192Z",
+    "updatedAt": "2026-04-23T19:59:40.165Z"
+  },
+  {
+    "id": "ORD-012",
+    "orderNumber": 12,
+    "userId": 6,
+    "customer": "simran",
+    "customerEmail": "unknowuser.0056@gmail.com",
+    "items": [
+      {
+        "menuItemId": 37,
+        "name": "Quinoa Bowl",
+        "qty": 1,
+        "price": 280,
+        "category": "Food",
+        "customization": null
+      },
+      {
+        "menuItemId": 27,
+        "name": "Mango Smoothie",
+        "qty": 1,
+        "price": 230,
+        "category": "Cold Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Cold",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 510,
+    "status": "Preparing",
+    "notes": "",
+    "createdAt": "2026-04-23T20:09:09.337Z",
+    "updatedAt": "2026-04-24T06:24:56.923Z"
+  }
+]

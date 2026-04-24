@@ -1,0 +1,10 @@
+{
+  "active": false,
+  "sessionId": null,
+  "userId": null,
+  "name": "",
+  "email": "",
+  "userAgent": "",
+  "lastSeenAt": null,
+  "expiresAt": null
+}

@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { apiRequest, clearAdminAuth, getAdminUser } from "../utils/api";
 
 export default function AdminNavbar() {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
-  const location  = useLocation();
-  const navigate  = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const adminUser = getAdminUser();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -13,9 +15,22 @@ export default function AdminNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [location]);
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
 
   const isLanding = location.pathname === "/";
+
+  async function handleLogout() {
+    try {
+      await apiRequest("/api/auth/logout", { method: "POST" });
+    } catch (error) {
+      // Local cleanup still keeps the admin side safe.
+    }
+
+    clearAdminAuth();
+    navigate("/login");
+  }
 
   return (
     <nav className={`navbar ${scrolled || !isLanding ? "navbar--solid" : ""}`}>
@@ -25,7 +40,7 @@ export default function AdminNavbar() {
 
       <button
         className="navbar__hamburger"
-        onClick={() => setMenuOpen(v => !v)}
+        onClick={() => setMenuOpen((open) => !open)}
         aria-label="Toggle menu"
       >
         <span></span><span></span><span></span>
@@ -40,16 +55,24 @@ export default function AdminNavbar() {
           Home
         </span>
         <span
-          onClick={() => navigate("/admin/dashboard")}
+          onClick={() => navigate(adminUser ? "/admin/dashboard" : "/login")}
           className={`navbar__link ${location.pathname.startsWith("/admin") ? "navbar__link--active" : ""}`}
           style={{ cursor: "pointer" }}
         >
-          Dashboard
+          {adminUser ? "Dashboard" : "Admin Login"}
         </span>
-        {/* badge shows pending orders count */}
-        <span className="navbar__link" style={{ color: "var(--caramel)", cursor: "default" }}>
-          Admin ⚙
-        </span>
+        {adminUser && (
+          <span className="navbar__role-badge navbar__role-badge--admin">Admin</span>
+        )}
+        {adminUser ? (
+          <span className="navbar__link" onClick={handleLogout} style={{ color: "var(--caramel)", cursor: "pointer" }}>
+            Logout
+          </span>
+        ) : (
+          <span className="navbar__link" style={{ color: "var(--caramel)", cursor: "default" }}>
+            Admin
+          </span>
+        )}
       </div>
     </nav>
   );

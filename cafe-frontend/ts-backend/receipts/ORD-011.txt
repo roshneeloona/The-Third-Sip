@@ -1,0 +1,15 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-011
+Customer: simran rajput
+Email: unknowuser.0056@gmail.com
+Status: Pending
+Placed At: 24/4/2026, 1:29:05 am
+
+Items:
+- Strawberry Mojito x1 @ INR 240 = INR 240
+
+Total: INR 240
+
+Thanks for visiting The Third Sip.

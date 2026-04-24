@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+import { apiRequest, clearAuth, getStoredUser } from "../utils/api"
 
 function Navbar() {
   const { count } = useCart()
@@ -8,9 +9,7 @@ function Navbar() {
   const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  // Read user from localStorage
-  const user = JSON.parse(localStorage.getItem("user") || "null")
+  const user = getStoredUser()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -18,13 +17,20 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  useEffect(() => { setMenuOpen(false) }, [location])
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location])
 
   const isHome = location.pathname === "/"
 
-  function handleLogout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
+  async function handleLogout() {
+    try {
+      await apiRequest("/api/auth/logout", { method: "POST" })
+    } catch (error) {
+      // Local logout still lets the user recover if the server call fails.
+    }
+
+    clearAuth()
     navigate("/")
     window.location.reload()
   }
@@ -43,6 +49,11 @@ function Navbar() {
         <Link to="/cart" className={`navbar__link navbar__link--cart ${location.pathname === "/cart" ? "navbar__link--active" : ""}`}>
           Cart {count > 0 && <span className="navbar__badge">{count}</span>}
         </Link>
+        {user ? (
+          <Link to="/orders" className={`navbar__link ${location.pathname === "/orders" ? "navbar__link--active" : ""}`}>
+            Track Orders
+          </Link>
+        ) : null}
 
         {user ? (
           <>

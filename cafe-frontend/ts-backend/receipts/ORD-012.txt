@@ -1,0 +1,16 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-012
+Customer: simran
+Email: unknowuser.0056@gmail.com
+Status: Pending
+Placed At: 24/4/2026, 1:39:09 am
+
+Items:
+- Quinoa Bowl x1 @ INR 280 = INR 280
+- Mango Smoothie x1 @ INR 230 = INR 230
+
+Total: INR 510
+
+Thanks for visiting The Third Sip.

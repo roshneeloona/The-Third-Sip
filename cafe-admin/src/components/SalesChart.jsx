@@ -1,9 +1,9 @@
-import { WEEKLY_SALES } from "../data/adminData";
 import { fmt } from "../utils/helpers";
 
-export default function SalesChart() {
-  const max   = Math.max(...WEEKLY_SALES.map(d => d.revenue));
-  const total = WEEKLY_SALES.reduce((a, b) => a + b.revenue, 0);
+export default function SalesChart({ data = [] }) {
+  const chartData = data.length > 0 ? data : [{ day: "Mon", revenue: 0 }];
+  const max = Math.max(...chartData.map((entry) => entry.revenue), 1);
+  const total = chartData.reduce((sum, entry) => sum + entry.revenue, 0);
 
   return (
     <div className="card chart">
@@ -15,18 +15,18 @@ export default function SalesChart() {
         <span className="chart__total">{fmt(total)}</span>
       </div>
       <div className="chart__bars">
-        {WEEKLY_SALES.map((d, i) => {
-          const h      = Math.round((d.revenue / max) * 110);
-          const active = i === WEEKLY_SALES.length - 1;
+        {chartData.map((entry, index) => {
+          const height = Math.round((entry.revenue / max) * 110);
+          const active = index === chartData.length - 1;
           return (
-            <div key={d.day} className="chart__bar-wrap">
+            <div key={`${entry.day}-${index}`} className="chart__bar-wrap">
               <div
-                title={fmt(d.revenue)}
+                title={fmt(entry.revenue)}
                 className={`chart__bar ${active ? "chart__bar--active" : "chart__bar--default"}`}
-                style={{ height: h }}
+                style={{ height }}
               />
               <span className={`chart__bar-label ${active ? "chart__bar-label--active" : ""}`}>
-                {d.day}
+                {entry.day}
               </span>
             </div>
           );

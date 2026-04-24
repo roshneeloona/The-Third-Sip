@@ -1,14 +1,23 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
+import { apiRequest, getStoredUser, saveAuth } from "../utils/api"
 
 function Signup() {
   const navigate = useNavigate()
+  const location = useLocation()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const nextPath = location.state?.from || "/"
+
+  useEffect(() => {
+    if (getStoredUser()) {
+      navigate(nextPath, { replace: true })
+    }
+  }, [navigate, nextPath])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -25,23 +34,14 @@ function Signup() {
 
     setLoading(true)
     try {
-      const res = await fetch("http://localhost:5000/api/register", {
+      const data = await apiRequest("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
+        body: { name, email, password }
       })
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.message || "Signup failed")
-        return
-      }
-
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.user))
-      navigate("/")
+      saveAuth(data.token, data.user)
+      navigate(nextPath, { replace: true })
     } catch (err) {
-      setError("Could not connect to server")
+      setError(err.message || "Could not connect to server")
     } finally {
       setLoading(false)
     }
@@ -49,7 +49,6 @@ function Signup() {
 
   return (
     <div className="auth-page">
-
       <div className="auth-left">
         <div className="auth-left__overlay" />
         <div className="auth-left__text">
@@ -63,7 +62,7 @@ function Signup() {
       </div>
 
       <div className="auth-right">
-        <Link to="/" className="auth-back">← Back</Link>
+        <Link to="/" className="auth-back">Back</Link>
 
         <motion.div
           className="auth-box"
@@ -74,8 +73,11 @@ function Signup() {
           <h1 className="auth-title">Create account.</h1>
           <p className="auth-sub">Join The Third Sip family</p>
 
-          <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="auth-note">
+            <p>Create your account to save time while ordering from the menu.</p>
+          </div>
 
+          <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-field">
               <label>Name</label>
               <input
@@ -118,7 +120,6 @@ function Signup() {
           </p>
         </motion.div>
       </div>
-
     </div>
   )
 }

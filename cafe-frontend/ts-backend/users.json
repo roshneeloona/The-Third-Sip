@@ -3,18 +3,48 @@
     "id": 1,
     "name": "roshnee loona",
     "email": "roshneeloona@gmail.com",
-    "password": "$2a$10$O5D0YCJYfqCtKOjxT8FjUuMKWGgE5ZZOXWlf71y5MsPL7oo2r/YUC"
+    "password": "$2a$10$O5D0YCJYfqCtKOjxT8FjUuMKWGgE5ZZOXWlf71y5MsPL7oo2r/YUC",
+    "role": "customer",
+    "createdAt": "2026-04-01T10:00:00.000Z"
   },
   {
     "id": 2,
-<<<<<<< HEAD
     "name": "Simran",
     "email": "leh.ladhak.0007@gmail.com",
-    "password": "$2a$10$v5ZdIXFVlJmR6lpg8odJcex9xJAZJA/Y.w.vO6NtFsJENcy06vRia"
-=======
+    "password": "$2a$10$v5ZdIXFVlJmR6lpg8odJcex9xJAZJA/Y.w.vO6NtFsJENcy06vRia",
+    "role": "customer",
+    "createdAt": "2026-04-08T08:30:00.000Z"
+  },
+  {
+    "id": 3,
     "name": "Roshnee Loona",
     "email": "loonaroshnee18@gmail.com",
-    "password": "$2a$10$CiuEkDQ3Q51CFAmxgWGo7eo3q4SE9j20B5gL45B7lggjCkvZC2Fnm"
->>>>>>> 92fb11b (menu changed)
+    "password": "$2a$10$CiuEkDQ3Q51CFAmxgWGo7eo3q4SE9j20B5gL45B7lggjCkvZC2Fnm",
+    "role": "customer",
+    "createdAt": "2026-04-09T13:10:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Third Sip Admin",
+    "email": "admin@thirdsip.com",
+    "password": "$2a$10$ltp6CV3Sm9hZx//nOfHSt.5sPXzZMSC.5yD.cne2zDixIh4OrIboq",
+    "role": "admin",
+    "createdAt": "2026-04-10T09:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "simran",
+    "email": "rajputsimran.0079@gmail.com",
+    "password": "$2a$10$ssBhwk3C5rwyLjagsuOhpOV9BoSyPJPghlGxCtLf/ATCkP8FEHFAu",
+    "role": "customer",
+    "createdAt": "2026-04-23T15:10:37.768Z"
+  },
+  {
+    "id": 6,
+    "name": "simran rajput",
+    "email": "unknowuser.0056@gmail.com",
+    "password": "$2a$10$DWb4EV70LUpGeAEH6lnjO./R5FeYnCCPNHtzA7sr5BOX30S.04pJS",
+    "role": "customer",
+    "createdAt": "2026-04-23T19:58:48.186Z"
   }
 ]
