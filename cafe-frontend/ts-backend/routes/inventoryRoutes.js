@@ -9,6 +9,10 @@ const { buildDashboardSummary } = require("../services/dashboardService");
 
 const router = express.Router();
 
+function normalizeStock(value) {
+  return Number(Number(value || 0).toFixed(2));
+}
+
 async function emitSummaryUpdate() {
   const summary = await buildDashboardSummary();
   emitAdmin("summary:updated", summary);
@@ -55,14 +59,14 @@ router.patch(
     const updates = { ...req.body };
 
     if (updates.restockBy !== undefined) {
-      updates.stock = Number(currentItem.stock) + Number(updates.restockBy);
+      updates.stock = normalizeStock(Number(currentItem.stock) + Number(updates.restockBy));
       delete updates.restockBy;
     }
 
     inventory[itemIndex] = {
       ...currentItem,
       ...updates,
-      stock: updates.stock !== undefined ? Number(updates.stock) : currentItem.stock,
+      stock: updates.stock !== undefined ? normalizeStock(updates.stock) : currentItem.stock,
       reorder: updates.reorder !== undefined ? Number(updates.reorder) : currentItem.reorder,
     };
 

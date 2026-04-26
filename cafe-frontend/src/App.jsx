@@ -1,5 +1,6 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import SmoothScroll from "./components/SmoothScroll";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
@@ -22,6 +23,7 @@ import CustomerRoute from "./components/CustomerRoute";
 function CustomerLayout() {
   return (
     <>
+      <SmoothScroll />
       <Navbar />
       <Outlet />
     </>

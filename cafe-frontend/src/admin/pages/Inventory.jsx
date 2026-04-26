@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { apiRequest } from "../utils/api";
-import { expiryStatus, daysUntil } from "../utils/helpers";
+import { expiryStatus, daysUntil, formatStock } from "../utils/helpers";
 
 export default function Inventory() {
   const [inventory, setInventory] = useState([]);
@@ -114,7 +114,7 @@ export default function Inventory() {
                     {low && <span className="admin-low-badge">Low Stock</span>}
                   </td>
                   <td>{item.category}</td>
-                  <td className={low ? "admin-inventory-table__stock--low" : ""}>{item.stock} {item.unit}</td>
+                  <td className={low ? "admin-inventory-table__stock--low" : ""}>{formatStock(item.stock, item.unit)}</td>
                   <td>{item.expiry}</td>
                   <td>
                     <span className={`admin-expiry-badge admin-expiry-badge--${state}`}>

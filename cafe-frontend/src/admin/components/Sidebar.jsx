@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAdminSummary } from "../hooks/useAdminSummary";
 import { apiRequest, clearAdminAuth } from "../utils/api";
@@ -11,7 +10,6 @@ const TABS = [
 ];
 
 export default function Sidebar() {
-  const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const { summary } = useAdminSummary();
@@ -33,15 +31,13 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className={`admin-sidebar ${open ? "admin-sidebar--open" : "admin-sidebar--closed"}`}>
+    <aside className="admin-sidebar">
       <div className="admin-sidebar__brand">
         <div className="admin-sidebar__logo">TS</div>
-        {open && (
-          <div>
-            <div className="admin-sidebar__brand-name">The Third Sip</div>
-            <div className="admin-sidebar__brand-sub">Admin Panel</div>
-          </div>
-        )}
+        <div>
+          <div className="admin-sidebar__brand-name">The Third Sip</div>
+          <div className="admin-sidebar__brand-sub">Admin Panel</div>
+        </div>
       </div>
 
       <nav className="admin-sidebar__nav">
@@ -56,25 +52,19 @@ export default function Sidebar() {
               className={`admin-sidebar__link ${active ? "admin-sidebar__link--active" : ""}`}
             >
               <span className="admin-sidebar__icon">{tab.icon}</span>
-              {open && (
-                <>
-                  <span className="admin-sidebar__label">{tab.label}</span>
-                  {badge > 0 && <span className="admin-sidebar__badge">{badge}</span>}
-                </>
-              )}
+              <span className="admin-sidebar__label">{tab.label}</span>
+              {badge > 0 && <span className="admin-sidebar__badge">{badge}</span>}
             </button>
           );
         })}
       </nav>
 
       <div className="admin-sidebar__footer">
-        {open && (
-          <button className="admin-sidebar__toggle" onClick={handleLogout}>
-            Logout
-          </button>
-        )}
-        <button className="admin-sidebar__toggle" onClick={() => setOpen((value) => !value)}>
-          {open ? "Collapse" : "Expand"}
+        <button className="admin-sidebar__action" onClick={() => navigate("/")}>
+          View site
+        </button>
+        <button className="admin-sidebar__action admin-sidebar__action--logout" onClick={handleLogout}>
+          Logout
         </button>
       </div>
     </aside>

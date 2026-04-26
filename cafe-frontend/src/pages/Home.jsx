@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Lenis from "@studio-freight/lenis";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { coffees } from "../data/coffeeData";
@@ -8,32 +7,59 @@ import { fetchMenuItems, getStoredUser } from "../utils/api";
 
 function Home() {
   const navigate = useNavigate();
-  const [scrollY, setScrollY] = useState(0);
   const [featured, setFeatured] = useState(() => coffees.slice(0, 3));
+  const heroBgRef = useRef(null);
+  const heroContentRef = useRef(null);
+  const heroTitleRef = useRef(null);
   const customerUser = getStoredUser();
 
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.09,
-      smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.4,
-    });
+    let rafId = 0;
+    let heroActive = true;
 
-    lenis.on("scroll", ({ scroll }) => {
-      setScrollY(scroll);
-    });
+    function updateHero() {
+      rafId = 0;
 
-    let rafId;
-    function raf(time) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
+      const scroll = window.scrollY || document.documentElement.scrollTop || 0;
+      const heroLimit = Math.max(window.innerHeight, 640) + 180;
+      const activeScroll = Math.min(scroll, heroLimit);
+      const progress = Math.min(activeScroll / 650, 1);
+      const heroOpacity = Math.max(1 - activeScroll / 380, 0);
+      const titleScale = 1 + progress * 0.32;
+      const contentY = activeScroll * 0.12;
+      const bgY = activeScroll * 0.18;
+      heroActive = scroll <= heroLimit;
+
+      if (heroBgRef.current) {
+        heroBgRef.current.style.transform = `translate3d(0, ${bgY}px, 0)`;
+      }
+
+      if (heroContentRef.current) {
+        heroContentRef.current.style.opacity = String(heroOpacity);
+        heroContentRef.current.style.transform = `translate3d(0, ${contentY}px, 0)`;
+      }
+
+      if (heroTitleRef.current) {
+        heroTitleRef.current.style.transform = `scale(${titleScale})`;
+      }
     }
-    rafId = requestAnimationFrame(raf);
+
+    function scheduleHeroUpdate() {
+      if ((heroActive || window.scrollY < window.innerHeight + 180) && !rafId) {
+        rafId = requestAnimationFrame(updateHero);
+      }
+    }
+
+    scheduleHeroUpdate();
+    window.addEventListener("scroll", scheduleHeroUpdate, { passive: true });
+    window.addEventListener("resize", scheduleHeroUpdate);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", scheduleHeroUpdate);
+      window.removeEventListener("resize", scheduleHeroUpdate);
     };
   }, []);
 
@@ -57,12 +83,6 @@ function Home() {
     };
   }, []);
 
-  const progress = Math.min(scrollY / 650, 1);
-  const heroOpacity = Math.max(1 - scrollY / 380, 0);
-  const titleScale = 1 + progress * 0.32;
-  const contentY = scrollY * 0.12;
-  const bgY = scrollY * 0.18;
-
   function onAddToCart() {
     const currentUser = getStoredUser();
     if (!currentUser) {
@@ -75,20 +95,11 @@ function Home() {
   return (
     <div className="home">
       <section className="hero">
-        <div
-          className="hero__bg"
-          style={{ transform: `translateY(${bgY}px)` }}
-        />
+        <div className="hero__bg" ref={heroBgRef} />
         <div className="hero__grain" />
         <div className="hero__vignette" />
 
-        <div
-          className="hero__content"
-          style={{
-            opacity: heroOpacity,
-            transform: `translateY(${contentY}px)`,
-          }}
-        >
+        <div className="hero__content" ref={heroContentRef}>
           <motion.p
             className="hero__eyebrow"
             initial={{ opacity: 0, letterSpacing: "0.12em" }}
@@ -100,7 +111,7 @@ function Home() {
 
           <motion.h1
             className="hero__title"
-            style={{ transform: `scale(${titleScale})` }}
+            ref={heroTitleRef}
             initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -129,7 +140,7 @@ function Home() {
           </motion.div>
         </div>
 
-        <div className="hero__scroll-indicator">
+        {/* <div className="hero__scroll-indicator">
           <motion.div
             className="hero__scroll-line"
             initial={{ scaleY: 0 }}
@@ -137,7 +148,7 @@ function Home() {
             transition={{ duration: 1.3, delay: 1.1 }}
           />
          
-        </div>
+        </div> */}
       </section>
 
       <div className="marquee-strip">
@@ -201,16 +212,28 @@ function Home() {
       </section>
 
       <section className="access-guide">
-        <div className="access-guide__header">
+        <motion.div
+          className="access-guide__header"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
           <p className="section-eyebrow">Why Guests Return</p>
           <h2 className="section-title">Built for slow mornings and easy ordering.</h2>
           <p className="access-guide__sub">
             Thoughtful coffee, a calm atmosphere, and a menu that feels easy to explore from the first click to the final sip.
           </p>
-        </div>
+        </motion.div>
 
         <div className="access-guide__grid">
-          <div className="access-card">
+          <motion.div
+            className="access-card"
+            initial={{ opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="access-card__tag">Freshly Made</span>
             <h3>Small-batch coffee with a menu that stays simple and focused.</h3>
             <p>
@@ -224,9 +247,15 @@ function Home() {
                 <Link to="/login" className="btn btn--outline">Sign In</Link>
               )}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="access-card access-card--admin">
+          <motion.div
+            className="access-card access-card--admin"
+            initial={{ opacity: 0, y: 34 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="access-card__tag">Easy Ordering</span>
             <h3>Pick your drink, customise it, and place your order in a few clicks.</h3>
             <p>
@@ -240,7 +269,7 @@ function Home() {
                 <Link to="/signup" className="btn btn--outline">Create Account</Link>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

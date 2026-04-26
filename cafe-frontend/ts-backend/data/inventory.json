@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Arabica Coffee Beans",
     "category": "Beans",
-    "stock": 11.56,
+    "stock": 21.56,
     "unit": "kg",
     "expiry": "2026-05-14",
     "reorder": 10
@@ -12,7 +12,7 @@
     "id": 2,
     "name": "Robusta Coffee Beans",
     "category": "Beans",
-    "stock": 36,
+    "stock": 46,
     "unit": "kg",
     "expiry": "2026-05-08",
     "reorder": 8
@@ -21,7 +21,7 @@
     "id": 3,
     "name": "Oat Milk",
     "category": "Milk",
-    "stock": 59.45,
+    "stock": 69.45,
     "unit": "L",
     "expiry": "2026-04-28",
     "reorder": 15
@@ -30,7 +30,7 @@
     "id": 4,
     "name": "Full Cream Milk",
     "category": "Milk",
-    "stock": 33.02,
+    "stock": 103.02,
     "unit": "L",
     "expiry": "2026-04-26",
     "reorder": 20
@@ -39,7 +39,7 @@
     "id": 5,
     "name": "Vanilla Syrup",
     "category": "Syrups",
-    "stock": 3,
+    "stock": 13,
     "unit": "btl",
     "expiry": "2026-12-01",
     "reorder": 5
@@ -57,7 +57,7 @@
     "id": 7,
     "name": "Hazelnut Syrup",
     "category": "Syrups",
-    "stock": 2,
+    "stock": 12,
     "unit": "btl",
     "expiry": "2027-01-10",
     "reorder": 5
@@ -75,7 +75,7 @@
     "id": 9,
     "name": "Cocoa Powder",
     "category": "Extras",
-    "stock": 4,
+    "stock": 14,
     "unit": "kg",
     "expiry": "2026-09-30",
     "reorder": 5
