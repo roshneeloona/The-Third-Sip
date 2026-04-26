@@ -283,7 +283,7 @@ export const menuItems = [
     price: 320,
     category: "Food",
     description: "Grilled chicken breast with pesto, mozzarella, and roasted vegetables on ciabatta.",
-    image: "https://images.unsplash.com/photo-1559054663-8a1ba35e76c8?w=600&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1528736235302-52922df5c122?w=600&auto=format&fit=crop&q=80",
   },
   {
     id: 37,

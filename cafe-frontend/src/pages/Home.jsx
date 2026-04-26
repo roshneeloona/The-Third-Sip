@@ -136,7 +136,7 @@ function Home() {
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.3, delay: 1.1 }}
           />
-          <span className="hero__scroll-text">Scroll</span>
+         
         </div>
       </section>
 
@@ -183,7 +183,7 @@ function Home() {
           {[
             { num: "12+", label: "Origins Sourced" },
             { num: "50k", label: "Cups Served" },
-            { num: "4.9*", label: "Avg. Rating" },
+            { num: "4.9★", label: "Avg. Rating" },
           ].map((stat, index) => (
             <motion.div
               key={index}
@@ -319,16 +319,47 @@ function Home() {
       </section>
 
       <footer className="footer">
-        <div className="footer__top">
-          <div className="footer__brand">The Third Sip</div>
-          <nav className="footer__nav">
-            <Link to="/">Home</Link>
-            <Link to="/menu">Menu</Link>
-            <Link to="/cart">Cart</Link>
-          </nav>
+        <div className="footer__inner">
+          <div className="footer__brand-block">
+            <Link to="/" className="footer__brand">The Third Sip</Link>
+            <p>
+              Small-batch coffee with fresh cafe bites and a slower kind of everyday ritual.
+            </p>
+            <div className="footer__socials" aria-label="Social links">
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+            </div>
+          </div>
+
+          <div className="footer__cols">
+            <div className="footer__col">
+              <h3>Explore</h3>
+              <Link to="/">Home</Link>
+              <Link to="/menu">Menu</Link>
+              <Link to="/cart">Cart</Link>
+              {customerUser ? <Link to="/orders">Track Orders</Link> : <Link to="/login">Sign In</Link>}
+            </div>
+
+            <div className="footer__col">
+              <h3>Visit</h3>
+              <p>Open daily</p>
+              <p>8:00 AM - 10:00 PM</p>
+              <p>Fresh brews served all day</p>
+            </div>
+
+            <div className="footer__col footer__col--support">
+              <h3>Support</h3>
+              <Link to="/privacy">Privacy</Link>
+              <Link to="/faq">FAQ</Link>
+              <Link to="/contact">Help & Advice</Link>
+              {customerUser ? <Link to="/orders">Track an Order</Link> : <Link to="/login">Order Help</Link>}
+            </div>
+          </div>
         </div>
+
         <div className="footer__bottom">
-          <p>© 2026 The Third Sip. Crafted with love and caffeine.</p>
+          <p>&copy; 2026 The Third Sip. Crafted with care and caffeine.</p>
+          <p>Open daily 8:00 AM - 10:00 PM</p>
         </div>
       </footer>
     </div>

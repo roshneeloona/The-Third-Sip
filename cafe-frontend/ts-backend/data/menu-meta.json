@@ -3,11 +3,19 @@
     "active": true
   },
   "2": {
-    "sold": 56,
+    "sold": 57,
     "active": true
   },
   "5": {
-    "sold": 104,
+    "sold": 105,
+    "active": true
+  },
+  "9": {
+    "sold": 77,
+    "active": true
+  },
+  "14": {
+    "sold": 67,
     "active": true
   },
   "23": {

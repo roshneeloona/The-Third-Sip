@@ -28,6 +28,7 @@ const INVENTORY_FILE = path.join(DATA_DIR, "inventory.json");
 const ORDERS_FILE = path.join(DATA_DIR, "orders.json");
 const MENU_META_FILE = path.join(DATA_DIR, "menu-meta.json");
 const ADMIN_SESSION_FILE = path.join(DATA_DIR, "admin-session.json");
+const CONTACT_MESSAGES_FILE = path.join(DATA_DIR, "contact-messages.json");
 
 module.exports = {
   PORT,
@@ -43,4 +44,5 @@ module.exports = {
   ORDERS_FILE,
   MENU_META_FILE,
   ADMIN_SESSION_FILE,
+  CONTACT_MESSAGES_FILE,
 };

@@ -1,0 +1,17 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-013
+Customer: Sonam
+Email: 9888808731sr@gmail.com
+Status: Pending
+Placed At: 24/4/2026, 8:06:20 pm
+
+Items:
+- Flat White x1 @ INR 190 = INR 190
+- Iced Caramel Latte x1 @ INR 240 = INR 240
+- Vietnamese Coffee x1 @ INR 210 = INR 210
+
+Total: INR 640
+
+Thanks for visiting The Third Sip.

@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Arabica Coffee Beans",
     "category": "Beans",
-    "stock": 11.72,
+    "stock": 11.56,
     "unit": "kg",
     "expiry": "2026-05-14",
     "reorder": 10
@@ -21,7 +21,7 @@
     "id": 3,
     "name": "Oat Milk",
     "category": "Milk",
-    "stock": 59.65,
+    "stock": 59.45,
     "unit": "L",
     "expiry": "2026-04-28",
     "reorder": 15
@@ -30,7 +30,7 @@
     "id": 4,
     "name": "Full Cream Milk",
     "category": "Milk",
-    "stock": 33.74,
+    "stock": 33.02,
     "unit": "L",
     "expiry": "2026-04-26",
     "reorder": 20
@@ -66,7 +66,7 @@
     "id": 8,
     "name": "Sugar (White)",
     "category": "Extras",
-    "stock": 17.93,
+    "stock": 17.89,
     "unit": "kg",
     "expiry": "2027-06-01",
     "reorder": 10
@@ -84,7 +84,7 @@
     "id": 10,
     "name": "Disposable Cups (M)",
     "category": "Packaging",
-    "stock": 193,
+    "stock": 189,
     "unit": "pcs",
     "expiry": "2028-01-01",
     "reorder": 100

@@ -1,0 +1,15 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-014
+Customer: Sonam
+Email: 9888808731sr@gmail.com
+Status: Pending
+Placed At: 26/4/2026, 1:55:31 pm
+
+Items:
+- Cappuccino x1 @ INR 180 = INR 180
+
+Total: INR 180
+
+Thanks for visiting The Third Sip.

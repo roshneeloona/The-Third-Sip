@@ -3,6 +3,9 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
+import Contact from "./pages/Contact";
+import Faq from "./pages/Faq";
+import Privacy from "./pages/Privacy";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import OrderTracking from "./pages/OrderTracking";
@@ -52,6 +55,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route
             path="/orders"
             element={

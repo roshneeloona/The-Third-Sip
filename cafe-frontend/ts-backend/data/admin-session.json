@@ -1,10 +1,10 @@
 {
-  "active": false,
-  "sessionId": null,
-  "userId": null,
-  "name": "",
-  "email": "",
-  "userAgent": "",
-  "lastSeenAt": null,
-  "expiresAt": null
+  "active": true,
+  "sessionId": "552a830a-52f4-4e7a-9e32-2cb6dbc84d22",
+  "userId": 4,
+  "name": "Third Sip Admin",
+  "email": "admin@thirdsip.com",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+  "lastSeenAt": "2026-04-24T14:43:55.841Z",
+  "expiresAt": "2026-04-24T14:44:55.841Z"
 }

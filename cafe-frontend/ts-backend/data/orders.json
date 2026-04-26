@@ -342,5 +342,93 @@
     "notes": "",
     "createdAt": "2026-04-23T20:09:09.337Z",
     "updatedAt": "2026-04-24T06:24:56.923Z"
+  },
+  {
+    "id": "ORD-013",
+    "orderNumber": 13,
+    "userId": 7,
+    "customer": "Sonam",
+    "customerEmail": "9888808731sr@gmail.com",
+    "items": [
+      {
+        "menuItemId": 5,
+        "name": "Flat White",
+        "qty": 1,
+        "price": 190,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      },
+      {
+        "menuItemId": 9,
+        "name": "Iced Caramel Latte",
+        "qty": 1,
+        "price": 240,
+        "category": "Cold Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Cold",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      },
+      {
+        "menuItemId": 14,
+        "name": "Vietnamese Coffee",
+        "qty": 1,
+        "price": 210,
+        "category": "Cold Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Cold",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 640,
+    "status": "Delivered",
+    "notes": "",
+    "createdAt": "2026-04-24T14:36:20.519Z",
+    "updatedAt": "2026-04-24T14:42:55.466Z"
+  },
+  {
+    "id": "ORD-014",
+    "orderNumber": 14,
+    "userId": 7,
+    "customer": "Sonam",
+    "customerEmail": "9888808731sr@gmail.com",
+    "items": [
+      {
+        "menuItemId": 2,
+        "name": "Cappuccino",
+        "qty": 1,
+        "price": 180,
+        "category": "Hot Beverages",
+        "customization": {
+          "size": "Regular",
+          "temperature": "Hot",
+          "milk": "Whole Milk",
+          "sugar": "1 tsp",
+          "shots": 1,
+          "extras": []
+        }
+      }
+    ],
+    "total": 180,
+    "status": "Pending",
+    "notes": "",
+    "createdAt": "2026-04-26T08:25:31.712Z",
+    "updatedAt": "2026-04-26T08:25:31.712Z"
   }
 ]

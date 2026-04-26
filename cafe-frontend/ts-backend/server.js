@@ -12,6 +12,7 @@ const {
   ORDERS_FILE,
   MENU_META_FILE,
   ADMIN_SESSION_FILE,
+  CONTACT_MESSAGES_FILE,
 } = require("./config/constants");
 const { requestLogger } = require("./middleware/requestLogger");
 const { attachSessionMeta } = require("./middleware/auth");
@@ -23,6 +24,7 @@ const menuRoutes = require("./routes/menuRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const inventoryRoutes = require("./routes/inventoryRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const { initializeSocketServer } = require("./services/socketService");
 const { connectToDatabase } = require("./services/database");
 const { migrateLegacyUsers } = require("./services/userMigrationService");
@@ -51,6 +53,7 @@ async function bootstrapStorage() {
   await ensureJsonFile(INVENTORY_FILE, DEFAULT_INVENTORY);
   await ensureJsonFile(ORDERS_FILE, DEFAULT_ORDERS);
   await ensureJsonFile(MENU_META_FILE, DEFAULT_MENU_META);
+  await ensureJsonFile(CONTACT_MESSAGES_FILE, []);
   await ensureJsonFile(ADMIN_SESSION_FILE, {
     active: false,
     sessionId: null,
@@ -97,6 +100,7 @@ function configureApp() {
   app.use("/api/orders", orderRoutes);
   app.use("/api/inventory", inventoryRoutes);
   app.use("/api/dashboard", dashboardRoutes);
+  app.use("/api/contact", contactRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -56,8 +56,8 @@ function Menu() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-eyebrow" style={{ color: "#c69c6d" }}>Our Selection</p>
-          <p className="menu-page__sub">Click any item to customise your drink or add food to cart.</p>
+          <h1 className="menu-page__title">A Curated Menu of Sips and Bites.</h1>
+          <p className="menu-page__sub">Signature pours, chilled favourites, and fresh bites prepared with a quiet attention to detail.</p>
         </motion.div>
       </div>
 
@@ -68,9 +68,9 @@ function Menu() {
             className={`filter-btn ${activeCategory === cat ? "filter-btn--active" : ""}`}
             onClick={() => setActiveCategory(cat)}
           >
-            {cat === "Hot Beverages" && "â˜• "}
-            {cat === "Cold Beverages" && "ðŸ¥¶ "}
-            {cat === "Food" && "ðŸ½ï¸ "}
+            {cat === "Hot Beverages" && <span className="filter-btn__mark filter-btn__mark--hot" />}
+            {cat === "Cold Beverages" && <span className="filter-btn__mark filter-btn__mark--cold" />}
+            {cat === "Food" && <span className="filter-btn__mark filter-btn__mark--food" />}
             {cat}
           </button>
         ))}
