@@ -33,7 +33,7 @@ function Login() {
         method: "POST",
         body: { email, password }
       })
-      saveAuth(data.token, data.user)
+      saveAuth(data.user)
       navigate(nextPath, { replace: true })
     } catch (err) {
       setError(err.message || "Could not connect to server")

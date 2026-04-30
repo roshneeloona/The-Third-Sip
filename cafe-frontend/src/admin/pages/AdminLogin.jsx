@@ -29,7 +29,7 @@ export default function AdminLogin() {
         body: { email, password },
       });
 
-      saveAdminAuth(data.token, data.user);
+      saveAdminAuth(data.user);
       navigate(location.state?.from || "/admin/dashboard", { replace: true });
     } catch (requestError) {
       setError(requestError.message || "Could not sign in");

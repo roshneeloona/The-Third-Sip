@@ -1,0 +1,15 @@
+The Third Sip
+Order Receipt
+====================
+Order ID: ORD-015
+Customer: Sonam
+Email: 9888808731sr@gmail.com
+Status: Pending
+Placed At: 27/4/2026, 4:28:36 pm
+
+Items:
+- Chicken Panini x1 @ INR 320 = INR 320
+
+Total: INR 320
+
+Thanks for visiting The Third Sip.

@@ -43,10 +43,11 @@ function setAuthState(req, res, user, extra = {}) {
   res.cookie(TOKEN_COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
-  return { token, user: createAuthPayload(user) };
+  return { user: createAuthPayload(user) };
 }
 
 async function findUserByEmail(email) {

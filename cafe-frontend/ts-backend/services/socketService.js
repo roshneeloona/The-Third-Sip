@@ -1,8 +1,14 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/constants");
+const { JWT_SECRET, TOKEN_COOKIE_NAME } = require("../config/constants");
+const { parseCookies } = require("../utils/cookies");
 
 let io;
+
+function readSocketToken(socket) {
+  const cookies = parseCookies(socket.handshake.headers.cookie || "");
+  return cookies[TOKEN_COOKIE_NAME] || "";
+}
 
 function initializeSocketServer(server) {
   io = new Server(server, {
@@ -14,7 +20,7 @@ function initializeSocketServer(server) {
 
   io.use((socket, next) => {
     try {
-      const token = socket.handshake.auth?.token;
+      const token = readSocketToken(socket);
       if (!token) {
         next(new Error("Authentication required"));
         return;

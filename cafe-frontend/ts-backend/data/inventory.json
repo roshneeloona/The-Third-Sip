@@ -75,7 +75,7 @@
     "id": 9,
     "name": "Cocoa Powder",
     "category": "Extras",
-    "stock": 14,
+    "stock": 13.99,
     "unit": "kg",
     "expiry": "2026-09-30",
     "reorder": 5

@@ -1,6 +1,5 @@
 import { API_BASE_URL } from "../../utils/api";
 
-const ADMIN_TOKEN_KEY = "thirdsip_admin_token";
 const ADMIN_USER_KEY = "thirdsip_admin_user";
 
 function parseStoredUser() {
@@ -15,31 +14,22 @@ export function getAdminUser() {
   return parseStoredUser();
 }
 
-export function getAdminToken() {
-  return localStorage.getItem(ADMIN_TOKEN_KEY);
-}
-
-export function saveAdminAuth(token, user) {
-  localStorage.setItem(ADMIN_TOKEN_KEY, token);
+export function saveAdminAuth(user) {
+  localStorage.removeItem("thirdsip_admin_token");
   localStorage.setItem(ADMIN_USER_KEY, JSON.stringify(user));
 }
 
 export function clearAdminAuth() {
-  localStorage.removeItem(ADMIN_TOKEN_KEY);
+  localStorage.removeItem("thirdsip_admin_token");
   localStorage.removeItem(ADMIN_USER_KEY);
 }
 
 export async function apiRequest(path, options = {}) {
-  const token = getAdminToken();
   const headers = new Headers(options.headers || {});
   const isFormData = options.body instanceof FormData;
 
   if (!isFormData && options.body !== undefined && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
-  }
-
-  if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
   }
 
   const response = await fetch(`${API_BASE_URL}${path}`, {

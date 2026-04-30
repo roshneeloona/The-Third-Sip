@@ -19,8 +19,8 @@ export function getStoredAdminUser() {
   return readStoredJson(ADMIN_USER_KEY);
 }
 
-export function saveAuth(token, user) {
-  localStorage.setItem("token", token);
+export function saveAuth(user) {
+  localStorage.removeItem("token");
   localStorage.setItem("user", JSON.stringify(user));
 }
 
@@ -30,16 +30,11 @@ export function clearAuth() {
 }
 
 export async function apiRequest(path, options = {}) {
-  const token = localStorage.getItem("token");
   const headers = new Headers(options.headers || {});
   const isFormData = options.body instanceof FormData;
 
   if (!isFormData && options.body !== undefined && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
-  }
-
-  if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
   }
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -69,12 +64,7 @@ export async function fetchMenuItems(params = "") {
 }
 
 export async function apiTextRequest(path, options = {}) {
-  const token = localStorage.getItem("token");
   const headers = new Headers(options.headers || {});
-
-  if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
-  }
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
